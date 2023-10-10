@@ -11,55 +11,55 @@ namespace TODO.WebApi.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TodoItemsController : ControllerBase
+    public class ReviewsController : ControllerBase
     {
         private readonly TODOAppDBContext _context;
 
-        public TodoItemsController(TODOAppDBContext context)
+        public ReviewsController(TODOAppDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/TodoItems
+        // GET: api/Reviews
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
+        public async Task<ActionResult<IEnumerable<Reviews>>> GetReviews()
         {
-          if (_context.TodoItems == null)
+          if (_context.Reviews == null)
           {
               return NotFound();
           }
-            return await _context.TodoItems.ToListAsync();
+            return await _context.Reviews.ToListAsync();
         }
 
-        // GET: api/TodoItems/5
+        // GET: api/Reviews/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TodoItem>> GetTodoItem(int id)
+        public async Task<ActionResult<Reviews>> GetReviews(int id)
         {
-          if (_context.TodoItems == null)
+          if (_context.Reviews == null)
           {
               return NotFound();
           }
-            var todoItem = await _context.TodoItems.FindAsync(id);
+            var reviews = await _context.Reviews.FindAsync(id);
 
-            if (todoItem == null)
+            if (reviews == null)
             {
                 return NotFound();
             }
 
-            return todoItem;
+            return reviews;
         }
 
-        // PUT: api/TodoItems/5
+        // PUT: api/Reviews/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTodoItem(int id, TodoItem todoItem)
+        public async Task<IActionResult> PutReviews(int id, Reviews reviews)
         {
-            if (id != todoItem.Id)
+            if (id != reviews.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(todoItem).State = EntityState.Modified;
+            _context.Entry(reviews).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +67,7 @@ namespace TODO.WebApi.Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TodoItemExists(id))
+                if (!ReviewsExists(id))
                 {
                     return NotFound();
                 }
@@ -80,44 +80,44 @@ namespace TODO.WebApi.Controller
             return NoContent();
         }
 
-        // POST: api/TodoItems
+        // POST: api/Reviews
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
+        public async Task<ActionResult<Reviews>> PostReviews(Reviews reviews)
         {
-          if (_context.TodoItems == null)
+          if (_context.Reviews == null)
           {
-              return Problem("Entity set 'TODOAppDBContext.TodoItems'  is null.");
+              return Problem("Entity set 'TODOAppDBContext.Reviews'  is null.");
           }
-            _context.TodoItems.Add(todoItem);
+            _context.Reviews.Add(reviews);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
+            return CreatedAtAction("GetReviews", new { id = reviews.Id }, reviews);
         }
 
-        // DELETE: api/TodoItems/5
+        // DELETE: api/Reviews/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTodoItem(int id)
+        public async Task<IActionResult> DeleteReviews(int id)
         {
-            if (_context.TodoItems == null)
+            if (_context.Reviews == null)
             {
                 return NotFound();
             }
-            var todoItem = await _context.TodoItems.FindAsync(id);
-            if (todoItem == null)
+            var reviews = await _context.Reviews.FindAsync(id);
+            if (reviews == null)
             {
                 return NotFound();
             }
 
-            _context.TodoItems.Remove(todoItem);
+            _context.Reviews.Remove(reviews);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool TodoItemExists(int id)
+        private bool ReviewsExists(int id)
         {
-            return (_context.TodoItems?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Reviews?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

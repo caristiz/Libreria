@@ -11,55 +11,55 @@ namespace TODO.WebApi.Controller
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TodoItemsController : ControllerBase
+    public class BooksController : ControllerBase
     {
         private readonly TODOAppDBContext _context;
 
-        public TodoItemsController(TODOAppDBContext context)
+        public BooksController(TODOAppDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/TodoItems
+        // GET: api/Books
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
+        public async Task<ActionResult<IEnumerable<Books>>> GetBooks()
         {
-          if (_context.TodoItems == null)
+          if (_context.Books == null)
           {
               return NotFound();
           }
-            return await _context.TodoItems.ToListAsync();
+            return await _context.Books.ToListAsync();
         }
 
-        // GET: api/TodoItems/5
+        // GET: api/Books/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TodoItem>> GetTodoItem(int id)
+        public async Task<ActionResult<Books>> GetBooks(int id)
         {
-          if (_context.TodoItems == null)
+          if (_context.Books == null)
           {
               return NotFound();
           }
-            var todoItem = await _context.TodoItems.FindAsync(id);
+            var books = await _context.Books.FindAsync(id);
 
-            if (todoItem == null)
+            if (books == null)
             {
                 return NotFound();
             }
 
-            return todoItem;
+            return books;
         }
 
-        // PUT: api/TodoItems/5
+        // PUT: api/Books/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTodoItem(int id, TodoItem todoItem)
+        public async Task<IActionResult> PutBooks(int id, Books books)
         {
-            if (id != todoItem.Id)
+            if (id != books.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(todoItem).State = EntityState.Modified;
+            _context.Entry(books).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +67,7 @@ namespace TODO.WebApi.Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TodoItemExists(id))
+                if (!BooksExists(id))
                 {
                     return NotFound();
                 }
@@ -80,44 +80,44 @@ namespace TODO.WebApi.Controller
             return NoContent();
         }
 
-        // POST: api/TodoItems
+        // POST: api/Books
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
+        public async Task<ActionResult<Books>> PostBooks(Books books)
         {
-          if (_context.TodoItems == null)
+          if (_context.Books == null)
           {
-              return Problem("Entity set 'TODOAppDBContext.TodoItems'  is null.");
+              return Problem("Entity set 'TODOAppDBContext.Books'  is null.");
           }
-            _context.TodoItems.Add(todoItem);
+            _context.Books.Add(books);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
+            return CreatedAtAction("GetBooks", new { id = books.Id }, books);
         }
 
-        // DELETE: api/TodoItems/5
+        // DELETE: api/Books/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTodoItem(int id)
+        public async Task<IActionResult> DeleteBooks(int id)
         {
-            if (_context.TodoItems == null)
+            if (_context.Books == null)
             {
                 return NotFound();
             }
-            var todoItem = await _context.TodoItems.FindAsync(id);
-            if (todoItem == null)
+            var books = await _context.Books.FindAsync(id);
+            if (books == null)
             {
                 return NotFound();
             }
 
-            _context.TodoItems.Remove(todoItem);
+            _context.Books.Remove(books);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool TodoItemExists(int id)
+        private bool BooksExists(int id)
         {
-            return (_context.TodoItems?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Books?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
