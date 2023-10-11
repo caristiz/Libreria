@@ -9,7 +9,7 @@ namespace TODO.WebApi.Models
         public TODOAppDBContext(DbContextOptions<TODOAppDBContext> options) : base(options) { }
         public DbSet<User> Users { get; set; }
         public DbSet<TodoItem> TodoItems { get; set; }
-        public DbSet<TODO.WebApi.Models.Books> Books { get; set; } = default!;
+        public DbSet<TODO.WebApi.Models.Book> Books { get; set; } = default!;
         public DbSet<TODO.WebApi.Models.Reviews> Reviews { get; set; } = default!;
         
         //protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TODO.WebApi.Models;
 
@@ -11,9 +12,11 @@ using TODO.WebApi.Models;
 namespace TODO.WebApi.Migrations
 {
     [DbContext(typeof(TODOAppDBContext))]
-    partial class TODOAppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231011012040_NewModelReview")]
+    partial class NewModelReview
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace TODO.WebApi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TODO.WebApi.Models.Book", b =>
+            modelBuilder.Entity("TODO.WebApi.Models.Books", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -61,6 +64,9 @@ namespace TODO.WebApi.Migrations
                     b.Property<int>("BookId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("BooksId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Comment")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -76,7 +82,7 @@ namespace TODO.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookId");
+                    b.HasIndex("BooksId");
 
                     b.HasIndex("UserId");
 
@@ -131,11 +137,9 @@ namespace TODO.WebApi.Migrations
 
             modelBuilder.Entity("TODO.WebApi.Models.Reviews", b =>
                 {
-                    b.HasOne("TODO.WebApi.Models.Book", "Book")
+                    b.HasOne("TODO.WebApi.Models.Books", "Books")
                         .WithMany("Reviews")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BooksId");
 
                     b.HasOne("TODO.WebApi.Models.User", "User")
                         .WithMany()
@@ -143,7 +147,7 @@ namespace TODO.WebApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Book");
+                    b.Navigation("Books");
 
                     b.Navigation("User");
                 });
@@ -159,7 +163,7 @@ namespace TODO.WebApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TODO.WebApi.Models.Book", b =>
+            modelBuilder.Entity("TODO.WebApi.Models.Books", b =>
                 {
                     b.Navigation("Reviews");
                 });

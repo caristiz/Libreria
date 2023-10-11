@@ -13,7 +13,7 @@
             // Puedes agregar más propiedades según tus necesidades
 
             // Relación con el libro
-            public Books? Books { get; set; }  // Marcamos Book como nullable (?)
+            public Book? Book { get; set; }  // Marcamos Book como nullable (?)
 
             // Relación con el usuario
             public User? User { get; set; }  // Marcamos User como nullable (?)

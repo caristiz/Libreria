@@ -28,7 +28,7 @@ namespace TODO.WebApi.Controller
           {
               return NotFound();
           }
-            return await _context.Reviews.ToListAsync();
+            return await _context.Reviews.Include(x => x.Book).Include(x => x.User).ToListAsync();
         }
 
         // GET: api/Reviews/5
